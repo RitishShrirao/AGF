@@ -218,7 +218,7 @@ def validate(val_evaluator, tensorboard_writer, config, best_metrics, best_value
         best_metrics = aggr_metrics.copy()
 
         pred_filepath = os.path.join(config['pred_dir'], 'best_predictions')
-        np.savez(pred_filepath, **per_batch)
+        # np.savez(pred_filepath, **per_batch)
 
     return aggr_metrics, best_metrics, best_value
 
