@@ -26,7 +26,9 @@ def model_factory(config, data):
 
     if (task == "classification") or (task == "regression"):
         num_labels = len(data.class_names) if task == "classification" else data.labels_df.shape[1]
-        return AGFClassiregressor(config['model'], feat_dim, max_seq_len, config['d_model'],
+        # Use attention_type from config, or fall back to model name for backwards compatibility
+        attn_type = config.get('attention_type', config['model'])
+        return AGFClassiregressor(attn_type, feat_dim, max_seq_len, config['d_model'],
                                             config['num_heads'],
                                             config['num_layers'], config['dim_feedforward'],
                                             num_classes=num_labels,

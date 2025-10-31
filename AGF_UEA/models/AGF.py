@@ -147,7 +147,7 @@ class AGFClassiregressor(nn.Module):
 
         if self.attn_type == "softmax":
             enc_out = self.encoder(inp)
-        elif self.attn_type.startswith("svd"):
+        elif self.attn_type.startswith("svd") or self.attn_type == "hybrid":
             enc_out, ortho_loss = self.encoder(inp)
 
         enc_out = enc_out.permute(1, 0, 2)
@@ -162,5 +162,5 @@ class AGFClassiregressor(nn.Module):
 
         if self.attn_type == "softmax":
             return output
-        elif self.attn_type.startswith("svd"):
+        elif self.attn_type.startswith("svd") or self.attn_type == "hybrid":
             return output, ortho_loss

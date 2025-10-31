@@ -18,7 +18,7 @@ class EncoderLayer(nn.Module):
     def forward(self, x):
         if self.attn_type == "softmax":
             new_x = self.attention(x)
-        elif self.attn_type.startswith("svd"):
+        elif self.attn_type.startswith("svd") or self.attn_type == "hybrid":
             new_x, ortho_loss = self.attention(x)
 
         x = x + self.dropout(new_x)
@@ -29,7 +29,7 @@ class EncoderLayer(nn.Module):
 
         if self.attn_type == "softmax":
             return self.norm2(x + y)
-        elif self.attn_type.startswith("svd"):
+        elif self.attn_type.startswith("svd") or self.attn_type == "hybrid":
             return self.norm2(x + y), ortho_loss
         
 class Encoder(nn.Module):
@@ -46,7 +46,8 @@ class Encoder(nn.Module):
         for attn_layer in self.attn_layers:
             if attn_layer.attention.inner_attention.__class__.__name__.startswith("Softmax"):
                 x = attn_layer(x)
-            elif  attn_layer.attention.inner_attention.__class__.__name__.startswith("SVD"):
+            elif attn_layer.attention.inner_attention.__class__.__name__.startswith("SVD") or \
+                 attn_layer.attention.inner_attention.__class__.__name__.startswith("Hybrid"):
                 x, ortho_loss = attn_layer(x)
                 ortho_loss_list.append(ortho_loss)
 
@@ -55,5 +56,6 @@ class Encoder(nn.Module):
 
         if attn_layer.attention.inner_attention.__class__.__name__.startswith("Softmax"):
             return x
-        elif  attn_layer.attention.inner_attention.__class__.__name__.startswith("SVD"):
+        elif attn_layer.attention.inner_attention.__class__.__name__.startswith("SVD") or \
+             attn_layer.attention.inner_attention.__class__.__name__.startswith("Hybrid"):
             return x, ortho_loss_list

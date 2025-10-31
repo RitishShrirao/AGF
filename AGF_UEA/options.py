@@ -18,6 +18,8 @@ class Options(object):
                                  help='low rank dimension * rank_multi')
         
         ## Hyper-parameters for AGF
+        self.parser.add_argument('--attention_type', type=str, default='svd', choices=['softmax', 'svd', 'hybrid'],
+                                 help='Type of attention mechanism: softmax (standard), svd (AGF), or hybrid (half AGF + half flash attention)')
         self.parser.add_argument('--poly_type', type=str, default=None,
                                  help='polynomial type')
         self.parser.add_argument('--K', type=int, default=None,

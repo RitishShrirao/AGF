@@ -72,12 +72,13 @@ def setup(args):
     config['initial_timestamp'] = formatted_timestamp
     # output_dir += "_" + str(config["masking_ratio"]) + "_" + str(config["mean_mask_length"])
     # hyper-parameters for ksvd
-    if "cos" in config["model"]:
-        output_dir += "_" + str(config["model"]) + "_eta" + str(config["eta"]) + "_rank" + str(config["low_rank"]) + "_multi" + str(config["rank_multi"])
-    elif "softmax" in config["model"]:
-        output_dir += "_" + str(config["model"]) + "_eta" + str(config["eta"]) + "_rank" + str(config["low_rank"]) + "_nbFeat" + str(config["nb_features"])
-    elif "svd" in config["model"] or "evd" in config["model"]:
-        output_dir += "_" + str(config["model"]) + "_poly-type'" + str(config["poly_type"]) + "'_K" + str(config["K"]) + "_reg" + str(config["eta"]) + "_alpha" + str(config["alpha"]) + "_beta" + str(config["beta"]) + "_fixI" + str(config["fixI"])
+    attn_type = config.get("attention_type", config["model"])  # Use attention_type if available, otherwise fall back to model
+    if "cos" in attn_type:
+        output_dir += "_" + str(attn_type) + "_eta" + str(config["eta"]) + "_rank" + str(config["low_rank"]) + "_multi" + str(config["rank_multi"])
+    elif "softmax" in attn_type:
+        output_dir += "_" + str(attn_type) + "_eta" + str(config["eta"]) + "_rank" + str(config["low_rank"]) + "_nbFeat" + str(config["nb_features"])
+    elif "svd" in attn_type or "evd" in attn_type or "hybrid" in attn_type:
+        output_dir += "_" + str(attn_type) + "_poly-type'" + str(config["poly_type"]) + "'_K" + str(config["K"]) + "_reg" + str(config["eta"]) + "_alpha" + str(config["alpha"]) + "_beta" + str(config["beta"]) + "_fixI" + str(config["fixI"])
     config['output_dir'] = output_dir
     config['save_dir'] = os.path.join(output_dir, 'checkpoints')
     config['pred_dir'] = os.path.join(output_dir, 'predictions')
