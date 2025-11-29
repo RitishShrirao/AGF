@@ -14,7 +14,7 @@ We include 10 multivariate subsets which can be downloaded from [[aeon formatted
 pip install -r requirements.txt
 ```
 
-2. Download the dataset from [[aeon formatted ts files]](https://www.timeseriesclassification.com/ClassificationDownloads/Archives/Multivariate2018_ts.zip).
+2. Download the dataset from [[aeon formatted ts files]](http://www.timeseriesclassification.com/aeon-toolkit/Archives/Multivariate2018_ts.zip).
 
 3. Train and evaluate the model with following commands. We use the "Best accuracy" as our metric for all baselines and experiments.
 
