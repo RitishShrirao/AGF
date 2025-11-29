@@ -3,3 +3,5 @@
 AGF_UEA/Multivariate_ts/*
 AGF_UEA/experiments/*
 *.xls
+data/*
+.conda/
